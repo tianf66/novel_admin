@@ -1,0 +1,13 @@
+.toolbar {
+    width:100%;
+    padding: 20px 10px;
+    background-color: #F4EFEE;
+}
+.table {
+    width: 100%;
+}
+
+th, tr, td {
+    text-align: center;
+    padding: 10px;
+}

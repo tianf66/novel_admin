@@ -1,0 +1,9 @@
+.logo {
+    height: 64px;
+    /* background: rgba(255, 255, 255, 0.2); */
+    line-height: 64px;
+}
+
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-layout-sider-trigger, .ant-layout-sider {
+    background-color: #006666 !important;
+}
