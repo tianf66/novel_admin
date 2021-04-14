@@ -10,6 +10,7 @@ import DistributorAds from "./DistributorAds";
 import DistributorChannel from "./DistributorChannel";
 
 const { Column } = Table;
+const { confirm } = Modal;
 const formItemLayout = {
     labelCol: { span: 7 },
     wrapperCol: { span: 12 },
@@ -94,7 +95,7 @@ export default class DistributorConfig  extends React.Component {
             {/* <Menu.Item onClick={this.editDistributor.bind(this)}><Icon type="plus-circle" />编辑</Menu.Item> */}
             {/* <Menu.Item onClick={this.channelDistributor.bind(this)}><Icon type="plus-circle" />频道配置</Menu.Item> */}
             <Menu.Item onClick={this.adsDistributor.bind(this)}><Icon type="gift" />广告配置</Menu.Item>
-            {/* <Menu.Item style={{color: 'red'}}><Icon type="issues-close" />删除渠道</Menu.Item> */}
+            <Menu.Item style={{color: 'red'}} onClick={this.deleteDistributor.bind(this)}><Icon type="issues-close" />删除渠道</Menu.Item>
             {/* <Menu.Item onClick={this.copyDistributor.bind(this)}><Icon type="plus-circle" />复制渠道</Menu.Item> */}
             {/* <Menu.Item onClick={this.redirectDistributor.bind(this)}><Icon type="plus-circle" />重定向状态更新</Menu.Item> */}
         </Menu>)
@@ -145,6 +146,33 @@ export default class DistributorConfig  extends React.Component {
         this.setState({
             redirectStatus: val
         })
+    }
+
+    /**
+     * 删除渠道function
+     */
+    deleteDistributor() {
+        let disdata = this.state.distributorConfig;
+        let _this = this;
+        confirm({
+            title: '确认删除当前渠道吗?',
+            content: `标题：‘${disdata.Title}',      编码：’${disdata.Code}‘`,
+            okText: '删除',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+                axios.delete('/api/distributor/deleteDisributor', {data : {id: disdata.ID}}).then((res) => {
+                    let data = res.data;
+                    if(data.Code === 0) {
+                        message.success('删除成功');
+                        _this.getDistributorData();
+                    }
+                });
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+          });
     }
 
     /**
@@ -263,13 +291,13 @@ export default class DistributorConfig  extends React.Component {
 
                         )}
                     /> */}
-                    <Column
+                    {/* <Column
                         title="状态"
                         align="center"
                         render={(text, record) => (
                         <span>{text.Status === 1 ? '启用' : text.Status === 2 ? '禁用' : '删除'}</span>
                         )}
-                    />
+                    /> */}
                     {/* <Column
                         title="广告蒙层状态"
                         align="center"
